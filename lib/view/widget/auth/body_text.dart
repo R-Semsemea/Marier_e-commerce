@@ -9,8 +9,8 @@ class CustomBodyText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       bodyText,
-      textAlign: TextAlign.center,
-      style: Theme.of(context).textTheme.bodyLarge,
+      //textAlign: TextAlign.center,
+      style: Theme.of(context).textTheme.bodyMedium,
     );
   }
 }

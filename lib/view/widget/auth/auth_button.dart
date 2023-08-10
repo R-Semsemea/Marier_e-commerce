@@ -22,7 +22,10 @@ class CustomAuthButton extends StatelessWidget {
         onPressed: onPressed,
         child: Text(
           buttonLabel,
-          style: Theme.of(context).textTheme.labelLarge,
+          style: Theme.of(context)
+              .textTheme
+              .bodyMedium
+              ?.copyWith(fontWeight: FontWeight.bold, color: AppColor.white),
         ),
       ),
     );

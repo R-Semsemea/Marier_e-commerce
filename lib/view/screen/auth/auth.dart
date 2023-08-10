@@ -14,8 +14,6 @@ class Auth extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ScreenDimension.init(context);
-
     return Scaffold(
       body: Stack(
         children: [
@@ -39,7 +37,7 @@ class Auth extends StatelessWidget {
                       ? ScreenDimension.height * 0.6724
                       : authController.isOpenSignUp
                           ? ScreenDimension.height * 0.8768
-                          : ScreenDimension.height * 0.4495,
+                          : ScreenDimension.height * 0.50,
                   curve: Curves.easeInOut,
                   child: AnimatedOpacity(
                     duration: const Duration(milliseconds: 350),

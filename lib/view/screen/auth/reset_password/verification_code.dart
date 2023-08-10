@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:get/get.dart';
 import 'package:marier_ecommerce/controller/auth/verification_code_controller.dart';
+import 'package:marier_ecommerce/view/widget/auth/body_text.dart';
 
 import '../../../../controller/auth/auth_controller.dart';
 import '../../../../core/constant/color.dart';
@@ -20,7 +21,7 @@ class VerificationCode extends StatelessWidget {
     VerifyCodeControllerImp controller = Get.put(VerifyCodeControllerImp());
     return Column(
       children: [
-        const CustomAuthTitle(titleText: "Verification Code"),
+        CustomAuthTitle(titleText: "verification_title".tr),
         Expanded(
           child: ListView(
             padding:
@@ -28,10 +29,7 @@ class VerificationCode extends StatelessWidget {
             physics: AppScrollPhysics.scrollPhysics,
             children: [
               Divider(height: ScreenDimension.height * 0.0197),
-              Text(
-                '''Please enter the verification code we sent to your registered email address. The code is a six-digit number that you should have received in your inbox. If you haven't received the code, click the "Resend Code" button below.''',
-                style: Theme.of(context).textTheme.labelMedium,
-              ),
+              CustomBodyText(bodyText: "verification_body_text".tr),
               Divider(height: ScreenDimension.height * 0.06),
               OtpTextField(
                 showCursor: false,
@@ -57,8 +55,9 @@ class VerificationCode extends StatelessWidget {
               Divider(height: ScreenDimension.height * 0.07),
               Padding(
                 padding: EdgeInsets.only(bottom: ScreenDimension.height * 0.03),
-                child: Text(
-                  "Resend Code",
+                child:
+                Text(
+                  "resend_code_button".tr,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.labelLarge?.copyWith(
                         color: AppColor.primaryColor,

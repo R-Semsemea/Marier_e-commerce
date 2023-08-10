@@ -9,6 +9,8 @@ class CustomAuthTextFieldForm extends StatelessWidget {
   final TextEditingController textEditingController;
   final bool obscureText;
   final void Function()? onPressedSuffixIcon;
+  final String? Function(String?) inputValidator;
+  final TextInputType keyboardType;
 
   const CustomAuthTextFieldForm({
     Key? key,
@@ -16,6 +18,8 @@ class CustomAuthTextFieldForm extends StatelessWidget {
     required this.hintText,
     required this.suffixIcon,
     required this.textEditingController,
+    required this.inputValidator,
+    required this.keyboardType,
     this.obscureText = false,
     this.onPressedSuffixIcon,
   }) : super(key: key);
@@ -29,15 +33,16 @@ class CustomAuthTextFieldForm extends StatelessWidget {
             height: ScreenDimension.height * 0.0283,
             child: Text(
               fieldName,
-              style: Theme.of(context).textTheme.labelSmall,
+              style: Theme.of(context).textTheme.bodySmall,
             )),
         Container(
           margin: EdgeInsets.only(bottom: ScreenDimension.height * 0.0197),
           width: double.infinity,
-          height: ScreenDimension.height * 0.0603,
+          //height: ScreenDimension.height * 0.0603,
           child: TextFormField(
-            style:
-                Theme.of(context).textTheme.labelMedium?.copyWith(fontSize: 16),
+            keyboardType: keyboardType,
+            validator: inputValidator,
+            style: Theme.of(context).textTheme.bodyMedium,
             obscureText: obscureText,
             obscuringCharacter: "*",
             controller: textEditingController,
@@ -55,12 +60,12 @@ class CustomAuthTextFieldForm extends StatelessWidget {
                 ),
               ),
               hintText: " $hintText",
+              hintStyle: Theme.of(context).textTheme.bodyMedium,
               suffixIcon: IconButton(
                 onPressed: onPressedSuffixIcon ?? () {},
                 icon: Icon(suffixIcon),
                 color: AppColor.black,
               ),
-              hintStyle: Theme.of(context).textTheme.labelMedium,
             ),
           ),
         ),

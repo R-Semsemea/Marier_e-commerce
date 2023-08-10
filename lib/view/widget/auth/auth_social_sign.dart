@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:marier_ecommerce/core/constant/screen_dimensions.dart';
 
 import '../../../core/constant/image_asset.dart';
@@ -18,9 +19,12 @@ class CustomAuthSocialSign extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Text(
-            "Login with Social",
-            style: TextStyle(fontWeight: FontWeight.w600),
+          Text(
+            "log_in_social".tr,
+            style: Theme.of(context)
+                .textTheme
+                .bodyMedium
+                ?.copyWith(fontWeight: FontWeight.bold),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

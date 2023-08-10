@@ -5,6 +5,7 @@ import 'package:marier_ecommerce/core/constant/screen_dimensions.dart';
 
 import '../../../controller/auth/auth_controller.dart';
 import '../../../core/constant/routes.dart';
+import '../../../core/functions/input_validator.dart';
 import '../../widget/auth/auth_button.dart';
 import '../../widget/auth/auth_nav.dart';
 import '../../widget/auth/auth_social_sign.dart';
@@ -21,60 +22,80 @@ class SignUp extends StatelessWidget {
     SignUpControllerImp controller = Get.put(SignUpControllerImp());
     return Column(
       children: [
-        const CustomAuthTitle(titleText: "Sign Up"),
+        CustomAuthTitle(titleText: "sign_up_title".tr),
         Expanded(
-          child: ListView(
-            padding:
-                EdgeInsets.symmetric(horizontal: ScreenDimension.width * 0.064),
-            physics: const BouncingScrollPhysics(),
-            children: [
-              Divider(height: ScreenDimension.height * 0.0197),
-              CustomAuthTextFieldForm(
-                fieldName: "E-mail",
-                hintText: 'ebizmirli@marier.com',
-                suffixIcon: Icons.email_outlined,
-                textEditingController: controller.emailController,
-              ),
-              CustomAuthTextFieldForm(
-                fieldName: "Phone Number",
-                hintText: '+90 555 555 44 33',
-                suffixIcon: Icons.phone_outlined,
-                textEditingController: controller.phoneNumberController,
-              ),
-              GetBuilder<SignUpControllerImp>(
-                builder:(controller)=> CustomAuthTextFieldForm(
-                  fieldName: "Password",
-                  hintText: 'Password',
-                  suffixIcon: controller.obscureText
-                      ? Icons.visibility_off
-                      : Icons.visibility,
-                  onPressedSuffixIcon: controller.onPressPasswordVisibility,
-                  textEditingController: controller.passwordController,
-                  obscureText: controller.obscureText,
+          child: Form(
+            key: controller.formKey,
+            child: ListView(
+              padding:
+                  EdgeInsets.symmetric(horizontal: ScreenDimension.width * 0.064),
+              physics: const BouncingScrollPhysics(),
+              children: [
+                Divider(height: ScreenDimension.height * 0.0197),
+                CustomAuthTextFieldForm(
+                  inputValidator: (val) {
+                    return inputValidator(val!, 5, 100, "email");
+                  },
+                  keyboardType: TextInputType.emailAddress,
+                  fieldName: "email_filed_label".tr,
+                  hintText: "email_filed_hint_text".tr,
+                  suffixIcon: Icons.email_outlined,
+                  textEditingController: controller.emailController,
                 ),
-              ),
-              GetBuilder<SignUpControllerImp>(
-                builder:(controller)=> CustomAuthTextFieldForm(
-                  fieldName: "Password",
-                  hintText: 'Password Again',
-                  suffixIcon: controller.obscureText
-                      ? Icons.visibility_off
-                      : Icons.visibility,
-                  onPressedSuffixIcon: controller.onPressPasswordVisibility,
-                  textEditingController: controller.rePasswordController,
-                  obscureText: controller.obscureText,
+                CustomAuthTextFieldForm(
+                  inputValidator: (val) {
+                    return inputValidator(val!, 10, 10, "phone");
+                  },
+                  keyboardType: TextInputType.phone,
+                  fieldName: "phone_number_label".tr,
+                  hintText: "phone_number_hint_text".tr,
+                  suffixIcon: Icons.phone_outlined,
+                  textEditingController: controller.phoneNumberController,
                 ),
-              ),
-              CustomAuthButton(buttonLabel: "SIGN UP", onPressed: () {}),
-              const CustomAuthSocialSign(),
-              CustomAuthNavigation(
-                text: "Already have an account ? ",
-                navText: "Sign In",
-                onTap: () {
-                  authController.navTo(AppRoute.logIn);
-                },
-              )
-            ],
+                GetBuilder<SignUpControllerImp>(
+                  builder: (controller) => CustomAuthTextFieldForm(
+                    inputValidator: (val) {
+                      return inputValidator(val!, 8, 30, "password");
+                    },
+                    keyboardType: TextInputType.text,
+                    fieldName: "password_field_label".tr,
+                    hintText: "password_filed_hint_text".tr,
+                    suffixIcon: controller.obscureText
+                        ? Icons.visibility_off
+                        : Icons.visibility,
+                    onPressedSuffixIcon: controller.onPressPasswordVisibility,
+                    textEditingController: controller.passwordController,
+                    obscureText: controller.obscureText,
+                  ),
+                ),
+                GetBuilder<SignUpControllerImp>(
+                  builder: (controller) => CustomAuthTextFieldForm(
+                    inputValidator: (val) {
+                      return inputValidator(val!, 8, 30, "password");
+                    },
+                    keyboardType: TextInputType.text,
+                    fieldName: "password_field_label".tr,
+                    hintText: "re_password_filed_hint_text".tr,
+                    suffixIcon: controller.obscureText
+                        ? Icons.visibility_off
+                        : Icons.visibility,
+                    onPressedSuffixIcon: controller.onPressPasswordVisibility,
+                    textEditingController: controller.rePasswordController,
+                    obscureText: controller.obscureText,
+                  ),
+                ),
+                CustomAuthButton(
+                    buttonLabel: "sign_up_button".tr, onPressed: controller.signUp),
+                const CustomAuthSocialSign(),
+                CustomAuthNavigation(
+                  text: "sign_in_navigation".tr,
+                  navText: "sign_in_navigation_button".tr,
+                  onTap: () {
+                    authController.navTo(AppRoute.logIn);
+                  },
+                )
+              ],
+            ),
           ),
         )
       ],

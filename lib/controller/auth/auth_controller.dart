@@ -100,8 +100,8 @@ class AuthControllerImp extends AuthController {
       update();
       return Future.value(false);
     }
-    exit(0);
-    //return Future.value(true);
+    //exit(0);
+    return Future.value(true);
   }
 
   @override

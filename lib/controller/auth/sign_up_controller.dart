@@ -19,8 +19,17 @@ abstract class SignUpController extends GetxController {
 }
 
 class SignUpControllerImp extends SignUpController {
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
   @override
-  signUp() {}
+  signUp() {
+    var formState = formKey.currentState;
+    if (formState!.validate()) {
+      print("Valid");
+    } else {
+      print("Not Valid");
+    }
+  }
 
   @override
   navToLogIn() {
@@ -40,10 +49,10 @@ class SignUpControllerImp extends SignUpController {
 
   @override
   void onInit() {
-    emailController = TextEditingController();
-    phoneNumberController = TextEditingController();
-    passwordController = TextEditingController();
-    rePasswordController = TextEditingController();
+    emailController = TextEditingController(text: "john@example.com");
+    phoneNumberController = TextEditingController(text: "0949494949");
+    passwordController = TextEditingController(text: "12345678");
+    rePasswordController = TextEditingController(text: "12345678");
     super.onInit();
   }
 

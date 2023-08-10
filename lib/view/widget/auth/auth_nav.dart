@@ -20,16 +20,12 @@ class CustomAuthNavigation extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(text,
-              style: Theme.of(context)
-                  .textTheme
-                  .labelSmall
-                  ?.copyWith(fontWeight: FontWeight.normal)),
+          Text(text, style: Theme.of(context).textTheme.bodySmall),
           InkWell(
             onTap: onTap,
             child: Text(
               navText,
-              style: Theme.of(context).textTheme.labelSmall,
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.bold),
             ),
           )
         ],

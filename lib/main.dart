@@ -5,7 +5,6 @@ import 'package:marier_ecommerce/core/constant/text_style.dart';
 import 'package:marier_ecommerce/core/localization/change_local.dart';
 import 'package:marier_ecommerce/core/services/services.dart';
 import 'package:marier_ecommerce/routes.dart';
-import 'package:marier_ecommerce/view/screen/auth/auth.dart';
 
 import 'core/constant/color.dart';
 import 'core/localization/translation.dart';
@@ -31,20 +30,13 @@ class MyApp extends StatelessWidget {
       //builder: DevicePreview.appBuilder,
       translations: MyTranslation(),
       debugShowCheckedModeBanner: false,
+
       title: 'Flutter Demo',
       locale: controller.language,
-      theme: ThemeData(
-        dividerColor: AppColor.transparent,
-        fontFamily: "Montserrat",
-        textTheme: const TextTheme(
-          titleLarge: AppTextStyle.titleLarge,
-          labelLarge: AppTextStyle.labelLarge,
-          labelMedium: AppTextStyle.labelMedium,
-          labelSmall: AppTextStyle.labelSmall,
-        ),
-      ),
-      routes: routes,
-      home: const Auth(),
+      theme: controller.appTheme,
+      //routes: routess,
+      getPages: routes,
+      //home: const Auth(),
     );
   }
 }
