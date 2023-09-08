@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:marier_ecommerce/core/constant/screen_dimensions.dart';
+import 'package:marier_ecommerce/view/screen/auth/new_user_verification.dart';
 import 'package:marier_ecommerce/view/screen/auth/reset_password/forget_password.dart';
 import 'package:marier_ecommerce/view/screen/auth/sign_up.dart';
 import 'package:marier_ecommerce/view/widget/auth/auth_background.dart';
@@ -20,8 +21,8 @@ class Auth extends StatelessWidget {
           const CustomAuthBackground(),
           GetBuilder<AuthControllerImp>(
             init: AuthControllerImp(),
-            builder: (authController) => WillPopScope(
-              onWillPop: authController.onWillPop,
+            builder: (controller) => WillPopScope(
+              onWillPop: controller.onWillPop,
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child: AnimatedContainer(
@@ -31,24 +32,26 @@ class Auth extends StatelessWidget {
                         BorderRadius.vertical(top: Radius.circular(20)),
                   ),
                   duration: const Duration(milliseconds: 750),
-                  onEnd: authController.onEndAnimatePosition,
+                  onEnd: controller.onEndAnimatePosition,
                   width: ScreenDimension.width,
-                  height: authController.isOpenLogIn
+                  height: controller.isOpenLogIn
                       ? ScreenDimension.height * 0.6724
-                      : authController.isOpenSignUp
-                          ? ScreenDimension.height * 0.8768
+                      : controller.isOpenSignUp
+                          ? ScreenDimension.height * 0.82 //0.8768
                           : ScreenDimension.height * 0.50,
                   curve: Curves.easeInOut,
                   child: AnimatedOpacity(
                     duration: const Duration(milliseconds: 350),
-                    onEnd: authController.onEndAnimateOpacity,
-                    opacity: authController.visible ? 1 : 0.0,
+                    onEnd: controller.onEndAnimateOpacity,
+                    opacity: controller.visible ? 1 : 0.0,
                     curve: Curves.easeInOut,
-                    child: authController.isOpenLogIn
-                        ? LogIn(authController: authController)
-                        : authController.isOpenSignUp
-                            ? SignUp(authController: authController)
-                            : ForgetPassword(authController: authController),
+                    child: controller.isOpenLogIn
+                        ? const LogIn()
+                        : controller.isOpenSignUp
+                            ? const SignUp()
+                            : controller.isOpenNewUserVerification
+                                ? const NewUserVerification()
+                                : const ForgetPassword(),
                   ),
                 ),
               ),

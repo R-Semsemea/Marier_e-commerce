@@ -5,8 +5,13 @@ import 'package:marier_ecommerce/core/constant/screen_dimensions.dart';
 class CustomAuthButton extends StatelessWidget {
   final String buttonLabel;
   final void Function()? onPressed;
+  final bool isWaiting;
 
-  const CustomAuthButton({Key? key, required this.buttonLabel, this.onPressed})
+  const CustomAuthButton(
+      {Key? key,
+      required this.buttonLabel,
+      this.onPressed,
+      this.isWaiting = false})
       : super(key: key);
 
   @override
@@ -19,15 +24,16 @@ class CustomAuthButton extends StatelessWidget {
           color: AppColor.primaryColor,
           borderRadius: BorderRadius.circular(25)),
       child: MaterialButton(
-        onPressed: onPressed,
-        child: Text(
-          buttonLabel,
-          style: Theme.of(context)
-              .textTheme
-              .bodyMedium
-              ?.copyWith(fontWeight: FontWeight.bold, color: AppColor.white),
-        ),
-      ),
+          onPressed: isWaiting ? null : onPressed,
+          child: isWaiting
+              ? const CircularProgressIndicator(
+                  color: AppColor.white,
+                )
+              : Text(
+                  buttonLabel,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.bold, color: AppColor.white),
+                )),
     );
   }
 }

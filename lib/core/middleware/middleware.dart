@@ -11,7 +11,7 @@ class Middleware extends GetMiddleware {
   @override
   RouteSettings? redirect(String? route) {
     MyServices myServices = Get.find();
-    if (myServices.cachStorage.read("firstTime") == false) {
+    if (myServices.cacheStorage.read("firstTime") == false) {
       return const RouteSettings(name: AppRoute.auth);
     }
     return null;

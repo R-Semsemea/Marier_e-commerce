@@ -14,8 +14,7 @@ class SelectLanguageControllerImp extends SelectLanguageController {
     LocaleController controller = Get.find();
     MyServices myServices = Get.find();
     controller.changeLang(langCode);
-    myServices.cachStorage.write("firstTime", false);
-
+    myServices.cacheStorage.write("firstTime", false);
   }
 
   @override

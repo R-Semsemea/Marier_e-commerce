@@ -11,7 +11,7 @@ class LocaleController extends GetxController {
 
   changeLang(String langCode) {
     Locale local = Locale(langCode);
-    myServices.cachStorage.write("lang", langCode);
+    myServices.cacheStorage.write("lang", langCode);
     Get.updateLocale(local);
     if (langCode == "ar") {
       appTheme = arTheme;
@@ -21,7 +21,7 @@ class LocaleController extends GetxController {
 
   @override
   void onInit() {
-    String? cacheStorageLang = myServices.cachStorage.read("lang");
+    String? cacheStorageLang = myServices.cacheStorage.read("lang");
 
     if (cacheStorageLang == "ar") {
       appTheme = arTheme;

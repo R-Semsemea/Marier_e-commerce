@@ -13,9 +13,7 @@ import '../../widget/auth/auth_text_form_field.dart';
 import '../../widget/auth/auth_title.dart';
 
 class SignUp extends StatelessWidget {
-  final AuthControllerImp authController;
-
-  const SignUp({Key? key, required this.authController}) : super(key: key);
+  const SignUp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,75 +24,88 @@ class SignUp extends StatelessWidget {
         Expanded(
           child: Form(
             key: controller.formKey,
-            child: ListView(
-              padding:
-                  EdgeInsets.symmetric(horizontal: ScreenDimension.width * 0.064),
-              physics: const BouncingScrollPhysics(),
-              children: [
-                Divider(height: ScreenDimension.height * 0.0197),
-                CustomAuthTextFieldForm(
-                  inputValidator: (val) {
-                    return inputValidator(val!, 5, 100, "email");
-                  },
-                  keyboardType: TextInputType.emailAddress,
-                  fieldName: "email_filed_label".tr,
-                  hintText: "email_filed_hint_text".tr,
-                  suffixIcon: Icons.email_outlined,
-                  textEditingController: controller.emailController,
-                ),
-                CustomAuthTextFieldForm(
-                  inputValidator: (val) {
-                    return inputValidator(val!, 10, 10, "phone");
-                  },
-                  keyboardType: TextInputType.phone,
-                  fieldName: "phone_number_label".tr,
-                  hintText: "phone_number_hint_text".tr,
-                  suffixIcon: Icons.phone_outlined,
-                  textEditingController: controller.phoneNumberController,
-                ),
-                GetBuilder<SignUpControllerImp>(
-                  builder: (controller) => CustomAuthTextFieldForm(
+            child: NotificationListener<OverscrollIndicatorNotification>(
+              onNotification: (OverscrollIndicatorNotification overscroll) {
+                overscroll.disallowIndicator();
+                return true;
+              },
+              child: ListView(
+                padding: EdgeInsets.symmetric(
+                    horizontal: ScreenDimension.width * 0.064),
+                children: [
+                  Divider(height: ScreenDimension.height * 0.0197),
+                  CustomAuthTextFieldForm(
                     inputValidator: (val) {
-                      return inputValidator(val!, 8, 30, "password");
+                      return inputValidator(val!, 5, 100, "email");
                     },
-                    keyboardType: TextInputType.text,
-                    fieldName: "password_field_label".tr,
-                    hintText: "password_filed_hint_text".tr,
-                    suffixIcon: controller.obscureText
-                        ? Icons.visibility_off
-                        : Icons.visibility,
-                    onPressedSuffixIcon: controller.onPressPasswordVisibility,
-                    textEditingController: controller.passwordController,
-                    obscureText: controller.obscureText,
+                    keyboardType: TextInputType.emailAddress,
+                    fieldName: "email_filed_label".tr,
+                    hintText: "email_filed_hint_text".tr,
+                    suffixIcon: Icons.email_outlined,
+                    textEditingController: controller.emailController,
                   ),
-                ),
-                GetBuilder<SignUpControllerImp>(
-                  builder: (controller) => CustomAuthTextFieldForm(
+                  CustomAuthTextFieldForm(
                     inputValidator: (val) {
-                      return inputValidator(val!, 8, 30, "password");
+                      return inputValidator(val!, 10, 10, "phone");
                     },
-                    keyboardType: TextInputType.text,
-                    fieldName: "password_field_label".tr,
-                    hintText: "re_password_filed_hint_text".tr,
-                    suffixIcon: controller.obscureText
-                        ? Icons.visibility_off
-                        : Icons.visibility,
-                    onPressedSuffixIcon: controller.onPressPasswordVisibility,
-                    textEditingController: controller.rePasswordController,
-                    obscureText: controller.obscureText,
+                    keyboardType: TextInputType.phone,
+                    fieldName: "phone_number_label".tr,
+                    hintText: "phone_number_hint_text".tr,
+                    suffixIcon: Icons.phone_outlined,
+                    textEditingController: controller.phoneNumberController,
                   ),
-                ),
-                CustomAuthButton(
-                    buttonLabel: "sign_up_button".tr, onPressed: controller.signUp),
-                const CustomAuthSocialSign(),
-                CustomAuthNavigation(
-                  text: "sign_in_navigation".tr,
-                  navText: "sign_in_navigation_button".tr,
-                  onTap: () {
-                    authController.navTo(AppRoute.logIn);
-                  },
-                )
-              ],
+                  GetBuilder<SignUpControllerImp>(
+                    builder: (controller) => CustomAuthTextFieldForm(
+                      inputValidator: (val) {
+                        return inputValidator(val!, 8, 30, "signUpPassword");
+                      },
+                      keyboardType: TextInputType.text,
+                      fieldName: "password_field_label".tr,
+                      hintText: "password_filed_hint_text".tr,
+                      suffixIcon: controller.obscureText
+                          ? Icons.visibility_off
+                          : Icons.visibility,
+                      onPressedSuffixIcon: controller.onPressPasswordVisibility,
+                      textEditingController: controller.passwordController,
+                      obscureText: controller.obscureText,
+                    ),
+                  ),
+                  GetBuilder<SignUpControllerImp>(
+                    builder: (controller) => CustomAuthTextFieldForm(
+                      inputValidator: (val) {
+                        return inputValidator(val!, 8, 30, "signUpPassword");
+                      },
+                      keyboardType: TextInputType.text,
+                      fieldName: "password_field_label".tr,
+                      hintText: "re_password_filed_hint_text".tr,
+                      suffixIcon: controller.obscureText
+                          ? Icons.visibility_off
+                          : Icons.visibility,
+                      onPressedSuffixIcon: controller.onPressPasswordVisibility,
+                      textEditingController: controller.rePasswordController,
+                      obscureText: controller.obscureText,
+                    ),
+                  ),
+                  GetBuilder<SignUpControllerImp>(
+                    builder: (controller) => CustomAuthButton(
+                      isWaiting: controller.isWaiting,
+                      buttonLabel: "sign_up_button".tr,
+                      onPressed: controller.signUp,
+                    ),
+                  ),
+                  const CustomAuthSocialSign(),
+                  GetBuilder<SignUpControllerImp>(
+                    builder: (controller) => CustomAuthNavigation(
+                      isWaiting: controller.isWaiting,
+                      text: "sign_in_navigation".tr,
+                      navText: "sign_in_navigation_button".tr,
+                      onTap: () {
+                        Get.find<AuthControllerImp>().navTo(AppRoute.logIn);
+                      },
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         )

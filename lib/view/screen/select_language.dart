@@ -37,7 +37,7 @@ class SelectLanguage extends StatelessWidget {
                     fontFamily: "Cairo",
                     changeLocaleTo: "ar"),
                 MaterialButton(
-                  onPressed: controller.myServices.cachStorage.erase,
+                  onPressed: controller.myServices.cacheStorage.erase,
                   child: Text("erase"),
                 )
               ],

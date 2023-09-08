@@ -1,23 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:get/get.dart';
-import 'package:marier_ecommerce/controller/auth/verification_code_controller.dart';
+import 'package:marier_ecommerce/controller/auth/new_user_verification_controller.dart';
 import 'package:marier_ecommerce/view/widget/auth/body_text.dart';
 
-import '../../../../controller/auth/auth_controller.dart';
 import '../../../../core/constant/color.dart';
 import '../../../../core/constant/screen_dimensions.dart';
-import '../../../widget/auth/auth_title.dart';
+import '../../widget/auth/auth_title.dart';
 
-class VerificationCode extends StatelessWidget {
-  final AuthControllerImp authController;
-
-  const VerificationCode({Key? key, required this.authController})
-      : super(key: key);
+class NewUserVerification extends StatelessWidget {
+  const NewUserVerification({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    VerifyCodeControllerImp controller = Get.put(VerifyCodeControllerImp());
+    Get.put(NewUserVerificationControllerImp());
     return Column(
       children: [
         CustomAuthTitle(titleText: "verification_title".tr),
@@ -34,7 +30,7 @@ class VerificationCode extends StatelessWidget {
                 Divider(height: ScreenDimension.height * 0.0197),
                 CustomBodyText(bodyText: "verification_body_text".tr),
                 Divider(height: ScreenDimension.height * 0.06),
-                GetBuilder<VerifyCodeControllerImp>(
+                GetBuilder<NewUserVerificationControllerImp>(
                   builder: (controller) => AbsorbPointer(
                     absorbing: controller.isWaiting,
                     child: OtpTextField(
@@ -62,7 +58,7 @@ class VerificationCode extends StatelessWidget {
                   ),
                 ),
                 Divider(height: ScreenDimension.height * 0.07),
-                GetBuilder<VerifyCodeControllerImp>(
+                GetBuilder<NewUserVerificationControllerImp>(
                   builder: (controller) => InkWell(
                     onTap: controller.onPressResendCode,
                     child: Text(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:marier_ecommerce/controller/auth/forget_password_controller.dart';
+import 'package:marier_ecommerce/controller/auth/email_verification_controller.dart';
 import 'package:marier_ecommerce/core/constant/screen_dimensions.dart';
 
 import '../../../../controller/auth/auth_controller.dart';
@@ -18,37 +18,48 @@ class EmailVerification extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ForgetPasswordControllerImp controller =
-        Get.put(ForgetPasswordControllerImp());
+    EmailVerificationControllerImp controller =
+        Get.put(EmailVerificationControllerImp());
     return Column(
       children: [
         CustomAuthTitle(titleText: "forget_password_title".tr),
         Expanded(
           child: Form(
-            child: ListView(
-              padding:
-                  EdgeInsets.symmetric(horizontal: ScreenDimension.width * 0.064),
-              physics: const BouncingScrollPhysics(),
-              children: [
-                Divider(height: ScreenDimension.height * 0.0197),
-                CustomBodyText(bodyText:"forget_password_body_text".tr ,),
-                Divider(
-                  height: ScreenDimension.height * 0.0295,
-                ),
-                CustomAuthTextFieldForm(
-                  inputValidator: (val) {
-                    return inputValidator(val!, 5, 100, "email");
-                  },
-                  keyboardType: TextInputType.emailAddress,
-                  fieldName: "email_filed_label".tr,
-                  hintText: "email_filed_hint_text".tr,
-                  suffixIcon: Icons.email_outlined,
-                  textEditingController: controller.email,
-                ),
-                CustomAuthButton(
-                    buttonLabel: "email_verification_button".tr,
-                    onPressed: authController.onRequestEmailVerification),
-              ],
+            key: controller.formKey,
+            child: NotificationListener<OverscrollIndicatorNotification>(
+              onNotification: (OverscrollIndicatorNotification overscroll) {
+                overscroll.disallowIndicator();
+                return true;
+              },
+              child: ListView(
+                padding: EdgeInsets.symmetric(
+                    horizontal: ScreenDimension.width * 0.064),
+                children: [
+                  Divider(height: ScreenDimension.height * 0.0197),
+                  CustomBodyText(
+                    bodyText: "forget_password_body_text".tr,
+                  ),
+                  Divider(
+                    height: ScreenDimension.height * 0.0295,
+                  ),
+                  CustomAuthTextFieldForm(
+                    inputValidator: (val) {
+                      return inputValidator(val!, 5, 100, "email");
+                    },
+                    keyboardType: TextInputType.emailAddress,
+                    fieldName: "email_filed_label".tr,
+                    hintText: "email_filed_hint_text".tr,
+                    suffixIcon: Icons.email_outlined,
+                    textEditingController: controller.emailController,
+                  ),
+                  GetBuilder<EmailVerificationControllerImp>(
+                    builder: (controller) => CustomAuthButton(
+                        isWaiting: controller.isWaiting,
+                        buttonLabel: "email_verification_button".tr,
+                        onPressed: controller.onPressSendNewPassword),
+                  ),
+                ],
+              ),
             ),
           ),
         )

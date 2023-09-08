@@ -7,10 +7,7 @@ import '../../../../controller/auth/auth_controller.dart';
 import 'email_verification.dart';
 
 class ForgetPassword extends StatelessWidget {
-  final AuthControllerImp authController;
-
-  const ForgetPassword({Key? key, required this.authController})
-      : super(key: key);
+  const ForgetPassword({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

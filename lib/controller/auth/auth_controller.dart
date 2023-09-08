@@ -1,17 +1,19 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:marier_ecommerce/controller/auth/sign_up_controller.dart';
 import 'package:marier_ecommerce/core/constant/color.dart';
 import 'package:marier_ecommerce/core/constant/screen_dimensions.dart';
 
 import '../../core/constant/routes.dart';
+import 'email_verification_controller.dart';
 
 abstract class AuthController extends GetxController {
   bool isOpenLogIn = true;
   bool isOpenSignUp = false;
   bool isOpenForgetPassword = false;
   bool isOpenVerificationCode = false;
+  bool isOpenNewUserVerification = false;
   DateTime? currentBackPressTime;
   bool visible = true;
   String widget = "";
@@ -27,7 +29,7 @@ abstract class AuthController extends GetxController {
 
   onVerificationCodeComplete();
 
-  onResetPassword();
+  onResetPasswordComplete();
 
   Future<bool> onWillPop();
 }
@@ -46,15 +48,31 @@ class AuthControllerImp extends AuthController {
       isOpenLogIn = true;
       isOpenSignUp = false;
       isOpenForgetPassword = false;
+      isOpenNewUserVerification = false;
     } else if (widget == AppRoute.signUp) {
       isOpenLogIn = false;
       isOpenSignUp = true;
       isOpenForgetPassword = false;
+      isOpenNewUserVerification = false;
     } else if (widget == AppRoute.forgetPassword) {
       forgotPasswordPageController = PageController();
       isOpenLogIn = false;
       isOpenSignUp = false;
+      isOpenNewUserVerification = false;
+
       isOpenForgetPassword = true;
+    } else if (widget == AppRoute.verificationCode) {
+      forgotPasswordPageController = PageController(initialPage: 1);
+      isOpenLogIn = false;
+      isOpenSignUp = false;
+      isOpenNewUserVerification = false;
+      isOpenForgetPassword = true;
+    } else if (widget == AppRoute.newUserVerification) {
+      forgotPasswordPageController = PageController(initialPage: 1);
+      isOpenLogIn = false;
+      isOpenSignUp = false;
+      isOpenForgetPassword = false;
+      isOpenNewUserVerification = true;
     }
     update();
   }
@@ -94,11 +112,22 @@ class AuthControllerImp extends AuthController {
         );
         return Future.value(false);
       }
-      //return Future.value(true);
-    } else if (isOpenSignUp || isOpenForgetPassword) {
-      navTo(AppRoute.logIn);
-      update();
-      return Future.value(false);
+    } else if (isOpenSignUp) {
+      if (Get.find<SignUpControllerImp>().isWaiting) {
+        return Future.value(false);
+      } else {
+        navTo(AppRoute.logIn);
+        update();
+        return Future.value(false);
+      }
+    } else if (isOpenForgetPassword) {
+      if (Get.find<EmailVerificationControllerImp>().isWaiting) {
+        return Future.value(false);
+      } else {
+        navTo(AppRoute.logIn);
+        update();
+        return Future.value(false);
+      }
     }
     //exit(0);
     return Future.value(true);
@@ -117,7 +146,10 @@ class AuthControllerImp extends AuthController {
   }
 
   @override
-  onResetPassword() {}
+  onResetPasswordComplete() async {
+    HapticFeedback.lightImpact();
+    onWillPop();
+  }
 
   @override
   void dispose() {

@@ -33,6 +33,13 @@ class MyTranslation extends Translations {
           "reset_password_body_text":
               "تهانينا على التحقق من حسابك بنجاح! الآن، يرجى تعيين كلمة مرور جديدة لحسابك. يجب أن تكون كلمة مرورك الجديدة قوية وآمنة لحماية معلوماتك الشخصية",
           "change_password_button": "تغيير كلمة المرور",
+          "snack_bar_error_1": "خطأ في كلمة المرور أو البريد الإلكتروني",
+          "snack_bar_error_2": "البريد الالكتروني مسجل مسبقاً",
+          "snack_bar_error_3": "خطأ في الاتصال الرجاء المحاولة لاحقاً",
+          "snack_bar_error_4": "لايوجد إتصال بالإنترنت!",
+          "snack_bar_error_5": "خطأ: ",
+          "snack_bar_error_6": "البريد الالكتروني الذي ادخلته خاطئ",
+          "Unknown_error": "خطأ غير معروف"
         },
         "en": {
           "sign_in_title": "Sign In",
@@ -64,6 +71,13 @@ class MyTranslation extends Translations {
           "reset_password_body_text":
               '''Congratulations on successfully verifying your account! Now, please set a new password for your account. Your new password should be strong and secure to protect your personal information.''',
           "change_password_button": "Change Password",
+          "snack_bar_error_1": "Wrong Credentials!",
+          "snack_bar_error_2": "Email already exists!",
+          "snack_bar_error_3": "Connection error please try again later",
+          "snack_bar_error_4": "No Internet Connection!",
+          "snack_bar_error_5": "Error: ",
+          "snack_bar_error_6": "Email doesn't exists!",
+          "Unknown_error": "Unknown error"
         }
       };
 }

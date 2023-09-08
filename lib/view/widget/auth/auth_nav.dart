@@ -6,9 +6,14 @@ class CustomAuthNavigation extends StatelessWidget {
   final String text;
   final String navText;
   final void Function()? onTap;
+  final bool isWaiting;
 
   const CustomAuthNavigation(
-      {Key? key, required this.text, required this.navText, this.onTap})
+      {Key? key,
+      required this.text,
+      required this.navText,
+      this.onTap,
+      this.isWaiting = false})
       : super(key: key);
 
   @override
@@ -22,10 +27,13 @@ class CustomAuthNavigation extends StatelessWidget {
         children: [
           Text(text, style: Theme.of(context).textTheme.bodySmall),
           InkWell(
-            onTap: onTap,
+            onTap: isWaiting ? null : onTap,
             child: Text(
               navText,
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(fontWeight: FontWeight.bold),
+              style: Theme.of(context)
+                  .textTheme
+                  .bodySmall
+                  ?.copyWith(fontWeight: FontWeight.bold),
             ),
           )
         ],

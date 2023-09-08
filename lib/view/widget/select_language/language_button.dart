@@ -23,7 +23,8 @@ class LanguageButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SelectLanguageControllerImp controller = Get.put(SelectLanguageControllerImp());
+    SelectLanguageControllerImp controller =
+        Get.put(SelectLanguageControllerImp());
     return InkWell(
       onTap: () {
         controller.onPress(changeLocaleTo);

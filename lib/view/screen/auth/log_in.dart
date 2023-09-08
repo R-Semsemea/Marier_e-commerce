@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:marier_ecommerce/controller/auth/log_in_controller.dart';
 import 'package:marier_ecommerce/core/constant/screen_dimensions.dart';
-import 'package:marier_ecommerce/core/constant/scroll_physics.dart';
 import 'package:marier_ecommerce/core/functions/input_validator.dart';
 
 import '../../../controller/auth/auth_controller.dart';
@@ -14,9 +13,9 @@ import '../../widget/auth/auth_text_form_field.dart';
 import '../../widget/auth/auth_title.dart';
 
 class LogIn extends StatelessWidget {
-  final AuthControllerImp? authController;
-
-  const LogIn({Key? key, required this.authController}) : super(key: key);
+  const LogIn({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,64 +26,80 @@ class LogIn extends StatelessWidget {
         Expanded(
           child: Form(
             key: controller.formKey,
-            child: ListView(
-              padding: EdgeInsets.symmetric(
-                  horizontal: ScreenDimension.width * 0.064),
-              physics: AppScrollPhysics.scrollPhysics,
-              children: [
-                Divider(height: ScreenDimension.height * 0.032),
-                CustomAuthTextFieldForm(
-                  inputValidator: (val) {
-                    return inputValidator(val!, 5, 100, "email");
-                  },
-                  keyboardType: TextInputType.emailAddress,
-                  fieldName: "email_filed_label".tr,
-                  hintText: "email_filed_hint_text".tr,
-                  suffixIcon: Icons.email_outlined,
-                  textEditingController: controller.emailController,
-                ),
-                GetBuilder<LogInControllerImp>(
-                  builder: (controller) => CustomAuthTextFieldForm(
+            child: NotificationListener<OverscrollIndicatorNotification>(
+              onNotification: (OverscrollIndicatorNotification overscroll) {
+                overscroll.disallowIndicator();
+                return true;
+              },
+              child: ListView(
+                padding: EdgeInsets.symmetric(
+                    horizontal: ScreenDimension.width * 0.064),
+                children: [
+                  Divider(height: ScreenDimension.height * 0.032),
+                  CustomAuthTextFieldForm(
                     inputValidator: (val) {
-                      return inputValidator(val!, 8, 30, "password");
+                      return inputValidator(val!, 5, 100, "email");
                     },
-                    keyboardType: TextInputType.text,
-                    fieldName: "password_field_label".tr,
-                    hintText: "password_filed_hint_text".tr,
-                    suffixIcon: controller.obscureText
-                        ? Icons.visibility_off
-                        : Icons.visibility,
-                    textEditingController: controller.passwordController,
-                    onPressedSuffixIcon: controller.onPressPasswordVisibility,
-                    obscureText: controller.obscureText,
+                    keyboardType: TextInputType.emailAddress,
+                    fieldName: "email_filed_label".tr,
+                    hintText: "email_filed_hint_text".tr,
+                    suffixIcon: Icons.email_outlined,
+                    textEditingController: controller.emailController,
                   ),
-                ),
-                SizedBox(
-                    height: ScreenDimension.height * 0.0480,
-                    width: double.infinity,
-                    child: InkWell(
-                      onTap: () {
-                        authController!.navTo(AppRoute.forgetPassword);
+                  GetBuilder<LogInControllerImp>(
+                    builder: (controller) => CustomAuthTextFieldForm(
+                      inputValidator: (val) {
+                        return inputValidator(val!, 8, 30, "password");
                       },
-                      child: Text("forgot_password_label".tr,
-                          textAlign: TextAlign.end,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall
-                              ?.copyWith(fontWeight: FontWeight.bold)),
-                    )),
-                CustomAuthButton(
-                    buttonLabel: "login_button".tr,
-                    onPressed: controller.logIn),
-                const CustomAuthSocialSign(),
-                CustomAuthNavigation(
-                  text: "sign_up_navigation".tr,
-                  navText: "sign_up_navigation_button".tr,
-                  onTap: () {
-                    authController!.navTo(AppRoute.signUp);
-                  },
-                )
-              ],
+                      keyboardType: TextInputType.text,
+                      fieldName: "password_field_label".tr,
+                      hintText: "password_filed_hint_text".tr,
+                      suffixIcon: controller.obscureText
+                          ? Icons.visibility_off
+                          : Icons.visibility,
+                      textEditingController: controller.passwordController,
+                      onPressedSuffixIcon: controller.onPressPasswordVisibility,
+                      obscureText: controller.obscureText,
+                    ),
+                  ),
+                  SizedBox(
+                      height: ScreenDimension.height * 0.0480,
+                      width: double.infinity,
+                      child: GetBuilder<LogInControllerImp>(
+                        builder: (controller) => InkWell(
+                          onTap: controller.isWaiting
+                              ? null
+                              : () {
+                                  Get.find<AuthControllerImp>()
+                                      .navTo(AppRoute.forgetPassword);
+                                },
+                          child: Text("forgot_password_label".tr,
+                              textAlign: TextAlign.end,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall
+                                  ?.copyWith(fontWeight: FontWeight.bold)),
+                        ),
+                      )),
+                  GetBuilder<LogInControllerImp>(
+                      builder: (controller) => CustomAuthButton(
+                            buttonLabel: "login_button".tr,
+                            onPressed: controller.logIn,
+                            isWaiting: controller.isWaiting,
+                          )),
+                  const CustomAuthSocialSign(),
+                  GetBuilder<LogInControllerImp>(
+                    builder: (controller) => CustomAuthNavigation(
+                      text: "sign_up_navigation".tr,
+                      navText: "sign_up_navigation_button".tr,
+                      isWaiting: controller.isWaiting,
+                      onTap: () {
+                        Get.find<AuthControllerImp>().navTo(AppRoute.signUp);
+                      },
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         )
